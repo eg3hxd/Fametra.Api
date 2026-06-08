@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0f172a">
+    <link rel="manifest" href="/manifest.json">
+    <title>Fametra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Version query string to bust cache so buttons work -->
+    <link rel="stylesheet" href="/style.css?v=3">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="time" id="clock">09:41</div>
+            <div class="icons">
+                <i class="fa-solid fa-signal"></i>
+                <i class="fa-solid fa-wifi"></i>
+                <i class="fa-solid fa-battery-full"></i>
+            </div>
+        </div>
+
+        <!-- 0. ROL SEÇİM EKRANI -->
+        <div id="view-role-select" class="view active">
+            <div class="center-header">
+                <div class="logo-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <h1 style="font-size: 32px; margin-bottom: 8px;">Fametra</h1>
+                <p style="font-size: 16px;">Ailenizi dijital dünyada güvende tutun</p>
+            </div>
+            
+            <div class="role-cards">
+                <div class="role-card parent" id="btn-role-parent">
+                    <div class="role-icon"><i class="fa-solid fa-user-shield"></i></div>
+                    <div class="role-info">
+                        <h3>Ebeveyn Girişi</h3>
+                        <p>Kontrol paneli ve ayarlar</p>
+                    </div>
+                </div>
+
+                <div class="role-card child" id="btn-role-child">
+                    <div class="role-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+                    <div class="role-info">
+                        <h3>Çocuk Cihazı Kurulumu</h3>
+                        <p>Bu cihazı aile ağına bağla</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EBEVEYN GİRİŞ EKRANI -->
+        <div id="view-parent-login" class="view">
+            <button class="btn-text" id="btn-back-login" style="align-self: flex-start; margin-bottom: 20px;">
+                <i class="fa-solid fa-arrow-left"></i> Geri Dön
+            </button>
+            <div class="center-header" style="margin-top: 10px;">
+                <h2>Ebeveyn Girişi</h2>
+                <p>Yönetim paneline erişmek için giriş yapın</p>
+            </div>
+            
+            <div class="glass-panel">
+                <div class="input-group">
+                    <label>E-posta Adresi</label>
+                    <input type="email" id="login-email" class="modern-input" placeholder="ornek@mail.com">
+                </div>
+                <div class="input-group" style="margin-bottom: 24px;">
+                    <label>Şifre</label>
+                    <input type="password" id="login-password" class="modern-input" placeholder="••••••••">
+                </div>
+                <p id="login-error" style="color:var(--danger); font-size:14px; margin-bottom:16px; display:none; font-weight:600; text-align:center;"></p>
+                
+                <button class="btn-primary" id="btn-login">Giriş Yap <i class="fa-solid fa-arrow-right"></i></button>
+                
+                <div style="text-align:center; margin-top:24px;">
+                    <span style="color:var(--text-muted); font-size:14px;">Hesabın yok mu?</span>
+                    <button class="btn-text" id="btn-go-register" style="font-size:14px; margin-left:4px;">Kayıt Ol</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- EBEVEYN KAYIT EKRANI -->
+        <div id="view-parent-register" class="view">
+            <button class="btn-text" id="btn-back-register" style="align-self: flex-start; margin-bottom: 20px;">
+                <i class="fa-solid fa-arrow-left"></i> Geri Dön
+            </button>
+            <div class="center-header" style="margin-top: 10px;">
+                <h2>Yeni Hesap Oluştur</h2>
+                <p>Ebeveyn hesabınızla ailenizi korumaya başlayın</p>
+            </div>
+            
+            <div class="glass-panel">
+                <div class="input-group">
+                    <label>Ad Soyad</label>
+                    <input type="text" id="reg-name" class="modern-input" placeholder="Örn: Ahmet Yılmaz">
+                </div>
+                <div class="input-group">
+                    <label>E-posta Adresi</label>
+                    <input type="email" id="reg-email" class="modern-input" placeholder="ornek@mail.com">
+                </div>
+                <div class="input-group" style="margin-bottom: 24px;">
+                    <label>Şifre</label>
+                    <input type="password" id="reg-password" class="modern-input" placeholder="••••••••">
+                </div>
+                <p id="reg-error" style="color:var(--danger); font-size:14px; margin-bottom:16px; display:none; font-weight:600; text-align:center;"></p>
+                
+                <button class="btn-primary" id="btn-register">Kayıt Ol <i class="fa-solid fa-user-plus"></i></button>
+            </div>
+        </div>
+
+        <!-- EBEVEYN KONTROL PANELİ -->
+        <div id="view-parent-dash" class="view">
+            <div class="dash-header">
+                <div class="user-info">
+                    <div class="avatar" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);">👨</div>
+                    <div>
+                        <h2 id="parent-name">Yönetici</h2>
+                        <p class="status-text" style="color:var(--text-muted);">Ebeveyn Paneli</p>
+                    </div>
+                </div>
+                <div class="dash-header-actions">
+                    <button id="btn-parent-logout"><i class="fa-solid fa-right-from-bracket"></i></button>
+                </div>
+            </div>
+
+            <div class="scroll-container">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <h3 style="font-size:20px;">Bağlı Cihazlar</h3>
+                    <button class="btn-text" id="btn-show-add-modal" style="background:rgba(59,130,246,0.1);"><i class="fa-solid fa-plus"></i> Cihaz Ekle</button>
+                </div>
+                
+                <div class="child-list" id="parent-child-list">
+                    <!-- Children injected here -->
+                    <div class="empty-state">Yükleniyor...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1. ÇOCUK KURULUM EKRANI -->
+        <div id="view-setup" class="view">
+            <button class="btn-text" id="btn-back-setup" style="align-self: flex-start; margin-bottom: 20px;">
+                <i class="fa-solid fa-arrow-left"></i> Geri Dön
+            </button>
+            <div class="center-header" style="margin-top: 0;">
+                <div class="logo-icon" style="background: linear-gradient(135deg, #10b981, #059669);"><i class="fa-solid fa-link"></i></div>
+                <h2>Cihazı Eşleştir</h2>
+                <p>Ebeveyn e-postasını ve ekrandaki 6 haneli kodu girin</p>
+            </div>
+            
+            <div class="glass-panel">
+                <div class="input-group">
+                    <label>Ebeveyn E-posta Adresi</label>
+                    <input type="email" id="setup-email" class="modern-input" placeholder="ornek@mail.com">
+                </div>
+
+                <div class="input-group" style="margin-top:30px; margin-bottom:10px;">
+                    <label style="text-align:center;">6 Haneli Eşleştirme Kodu</label>
+                    <div class="code-input-container" style="margin-top:16px;">
+                        <input type="text" inputmode="numeric" id="code-1" maxlength="1" class="code-box">
+                        <input type="text" inputmode="numeric" id="code-2" maxlength="1" class="code-box">
+                        <input type="text" inputmode="numeric" id="code-3" maxlength="1" class="code-box">
+                        <div class="code-separator">-</div>
+                        <input type="text" inputmode="numeric" id="code-4" maxlength="1" class="code-box">
+                        <input type="text" inputmode="numeric" id="code-5" maxlength="1" class="code-box">
+                        <input type="text" inputmode="numeric" id="code-6" maxlength="1" class="code-box">
+                    </div>
+                </div>
+
+                <div class="loading-spinner" id="setup-loader">
+                    <div class="spinner"></div>
+                    <p style="color:var(--text-main); font-weight:600;">Bağlanıyor...</p>
+                </div>
+
+                <button class="btn-primary" id="btn-verify" style="margin-top:10px;"><i class="fa-solid fa-link"></i> Cihazı Bağla</button>
+            </div>
+        </div>
+
+        <!-- 2. ÇOCUK ANA EKRANI -->
+        <div id="view-dashboard" class="view">
+            <div class="dash-header">
+                <div class="user-info">
+                    <div class="avatar" id="member-avatar">👦</div>
+                    <div>
+                        <h2 id="member-name">Merhaba</h2>
+                        <p class="status-text"><i class="fa-solid fa-shield-halved"></i> Fametra Koruması Aktif</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scroll-container">
+                <!-- Süre Kartı -->
+                <div class="glass-panel main-timer-card" style="padding:0; overflow:hidden; border:none; margin-bottom:24px;">
+                    <div style="padding: 24px; text-align:center; width:100%;">
+                        <h3 style="font-size:16px; color:var(--text-main); margin-bottom:24px; opacity:0.9;">Kalan Ekran Süresi</h3>
+                        <div class="circular-progress">
+                            <svg viewBox="0 0 100 100">
+                                <circle class="bg" cx="50" cy="50" r="45"></circle>
+                                <circle class="progress" id="time-progress" cx="50" cy="50" r="45"></circle>
+                            </svg>
+                            <div class="time-text">
+                                <span id="timer-mins">120</span>
+                                <small>dk</small>
+                            </div>
+                        </div>
+                        <p class="limit-text" id="limit-text" style="color:var(--text-muted); font-weight:500;">Günlük Limit: 120 dk</p>
+                    </div>
+                </div>
+
+                <!-- Konum & Pil -->
+                <div class="grid-2">
+                    <div class="glass-panel small-card" id="btn-ping-location">
+                        <div class="icon-wrapper blue"><i class="fa-solid fa-location-dot"></i></div>
+                        <h3 style="color:var(--text-main); margin-bottom:4px;">Konum</h3>
+                        <p id="location-status">Ebeveyne iletiliyor</p>
+                    </div>
+                    <div class="glass-panel small-card" id="card-battery">
+                        <div class="icon-wrapper green"><i class="fa-solid fa-battery-half"></i></div>
+                        <h3 style="color:var(--text-main); margin-bottom:4px;">Pil Durumu</h3>
+                        <p id="battery-status">Ölçülüyor...</p>
+                    </div>
+                </div>
+
+                <!-- Uygulamalar -->
+                <div class="glass-panel" style="padding:20px;">
+                    <div class="app-list-section" id="app-list-section">
+                        <h3>Uygulama İzinleri</h3>
+                        <p class="loading-text">Yükleniyor...</p>
+                    </div>
+                </div>
+
+                <!-- Bağlantıyı Kaldır -->
+                <button class="btn-danger" id="btn-unpair" style="background:transparent; border:none; margin-top:20px;"><i class="fa-solid fa-link-slash"></i> Bağlantıyı Kaldır</button>
+            </div>
+        </div>
+
+        <!-- 3. ÇOCUK KİLİT EKRANI -->
+        <div id="view-locked" class="view locked-view" style="background:rgba(2,6,23,0.95); backdrop-filter:blur(30px);">
+            <div class="glass-panel" style="max-width:360px; margin:auto; text-align:center;">
+                <div class="logo-icon" style="background:linear-gradient(135deg,#ef4444,#dc2626); font-size:40px; box-shadow:0 16px 32px rgba(239,68,68,0.4);"><i class="fa-solid fa-lock"></i></div>
+                <h2 style="font-size:28px; margin-bottom:12px;">Mola Zamanı!</h2>
+                <p style="margin-bottom:32px;">Günlük ekran süreni doldurdun. Cihaz ebeveynin tarafından kilitlendi.</p>
+                <button class="btn-primary" id="btn-request-time" style="background:linear-gradient(135deg,var(--primary),#2563eb);">
+                    <i class="fa-solid fa-clock"></i> 15 Dk Ek Süre İste
+                </button>
+                <button class="btn-secondary" id="btn-emergency" style="background:transparent; border:none; margin-top:8px;">
+                    <i class="fa-solid fa-phone"></i> Acil Arama
+                </button>
+            </div>
+        </div>
+
+        <!-- MODALS -->
+        <div class="modal-overlay" id="modal-add-device">
+            <div class="modal-content glass-panel" style="padding:0; overflow:hidden;">
+                <div class="modal-header" style="padding:24px 24px 0;">
+                    <h3 style="font-size:20px;">Yeni Cihaz Ekle</h3>
+                    <button class="modal-close" id="btn-close-modal"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div style="padding:0 24px;">
+                    <p style="font-size:14px; margin-top:12px; margin-bottom:24px; line-height:1.6;">Çocuğunuzun cihazında uygulamanın <strong style="color:white;">Çocuk Cihazı Kurulumu</strong> bölümünü açın ve aşağıdaki kodu girin.</p>
+                    
+                    <div style="background:rgba(0,0,0,0.3); border:1px solid var(--surface-border); border-radius:20px; padding:30px 20px; text-align:center; margin-bottom:24px;">
+                        <div id="new-device-code" style="font-size:42px; font-weight:800; letter-spacing:6px; color:var(--primary); text-shadow:0 0 20px var(--primary-glow);">------</div>
+                        <div id="new-device-timer" style="font-size:14px; color:var(--text-muted); margin-top:16px; font-weight:600;">Kod yükleniyor...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <!-- Version string added to bust cache -->
+    <script src="/app.js?v=3"></script>
+</body>
+</html>
